@@ -12,6 +12,6 @@ class Queue
   end
 
   def show
-    @queue.first
+    @queue.dup
   end
 end

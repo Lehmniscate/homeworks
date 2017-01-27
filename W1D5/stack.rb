@@ -12,6 +12,6 @@ class Stack
     end
 
     def show
-      @stack.last
+      @stack.dup
     end
   end
