@@ -31,7 +31,7 @@ class Simon
   end
 
   def require_sequence
-
+    
   end
 
   def add_random_color
