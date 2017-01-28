@@ -3,25 +3,27 @@ require 'io/console'
 
 class SimonIO
 
-  DISPLAY = [
-    {
+  DISPLAY = {
+    left: {
       color: :red,
       display: [' ','o ',' ']
-    },{
+    },top: {
       color: :blue,
       display: [' o ',' ','']
-    },{
+    },bottom: {
       color: :green,
       display: ['',' ',' o ']
-    },{
+    },right: {
       color: :yellow,
       display: [' ',' o',' ']
     }
-  ]
+  }
 
   def self.display_color(lit = [])
+    system 'clear'
     output = nil
-    DISPLAY.each do |color|
+    [:left, :top, :bottom, :right].each do |key|
+      color = DISPLAY[key]
       background = :black
       background = color[:color] if lit.include? color[:color].to_s
       output ||= Array.new(color[:display].size) {''}
@@ -32,6 +34,39 @@ class SimonIO
     end
     output.each {|line| puts line}
   end
+
+  def self.get_sequence(length)
+    sequence = []
+    until sequence.length == length
+      char = SimonIO.read_char
+      case char
+     when "\e[A"
+       #UP
+       color = DISPLAY[:top][:color].to_s
+       sequence << color
+       SimonIO.display_color([color])
+     when "\e[B"
+       #DOWN
+       color = DISPLAY[:bottom][:color].to_s
+       sequence << color
+       SimonIO.display_color([color])
+     when "\e[C"
+       #RIGHT
+       color = DISPLAY[:right][:color].to_s
+       sequence << color
+       SimonIO.display_color([color])
+     when "\e[D"
+       #LEFT
+       color = DISPLAY[:left][:color].to_s
+       sequence << color
+       SimonIO.display_color([color])
+     else
+       SimonIO.display_color()
+     end
+     sleep 0.1
+   end
+   return sequence
+ end
 
   def self.read_char
     STDIN.echo = false

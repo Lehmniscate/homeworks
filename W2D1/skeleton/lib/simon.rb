@@ -1,3 +1,4 @@
+require_relative 'simon_io'
 class Simon
   COLORS = %w(red blue green yellow)
 
@@ -28,10 +29,18 @@ class Simon
 
   def show_sequence
     add_random_color
+    @seq.each do |color|
+      SimonIO.display_color([color])
+      sleep 0.25
+      SimonIO.display_color()
+      sleep 0.25
+    end
+    SimonIO.display_color
   end
 
   def require_sequence
-    
+    input = SimonIO.get_sequence(@seq.length)
+    @game_over = true unless input == @seq
   end
 
   def add_random_color
@@ -39,11 +48,15 @@ class Simon
   end
 
   def round_success_message
-
+    SimonIO.display_color
+    puts "Congratulations you passed this round!"
+    sleep 1
   end
 
   def game_over_message
-
+    system 'clear'
+    puts "Sorry you failed..."
+    puts "It was #{@seq.join(" ")}"
   end
 
   def reset_game
@@ -51,4 +64,10 @@ class Simon
     @sequence_length = 1
     @game_over = false
   end
+end
+
+
+if __FILE__ == $PROGRAM_NAME
+  game = Simon.new
+  game.play
 end
