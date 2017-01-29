@@ -20,7 +20,8 @@ class SimonIO
   }
 
   def self.display_color(lit = [])
-    system 'clear'
+    # system 'clear'
+    puts "\e[H\e[2J"
     output = nil
     [:left, :top, :bottom, :right].each do |key|
       color = DISPLAY[key]
@@ -32,7 +33,8 @@ class SimonIO
           background: background)
       end
     end
-    output.each {|line| puts line}
+    output = output.map {|line| line + "\n"}.join("")
+    print output
   end
 
   def self.get_sequence(length)
@@ -60,10 +62,9 @@ class SimonIO
        color = DISPLAY[:left][:color].to_s
        sequence << color
        SimonIO.display_color([color])
-     else
-       SimonIO.display_color()
      end
      sleep 0.1
+     SimonIO.display_color
    end
    return sequence
  end

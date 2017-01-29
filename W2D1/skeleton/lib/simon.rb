@@ -31,9 +31,9 @@ class Simon
     add_random_color
     @seq.each do |color|
       SimonIO.display_color([color])
-      sleep 0.25
+      sleep 0.5
       SimonIO.display_color()
-      sleep 0.25
+      sleep 0.5
     end
     SimonIO.display_color
   end
