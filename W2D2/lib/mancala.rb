@@ -1,5 +1,6 @@
 require_relative 'board'
 require_relative 'player'
+require_relative 'mancala_exceptions.rb'
 
 class Mancala
   def initialize(name1, name2)
@@ -31,7 +32,7 @@ class Mancala
           start_pos = current_player.prompt
           start_pos -= 1 if start_pos <= 6
           @board.valid_move?(start_pos)
-        rescue Exception => e
+        rescue InputException => e
           puts e.message
         retry
         end
@@ -61,4 +62,13 @@ class Mancala
     puts "12  11  10   9   8   7"
     puts " 1   2   3   4   5   6"
   end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  puts "Player one name?"
+  player1 = gets.chomp
+  puts "Player two name?"
+  player2 = gets.chomp
+  game = Mancala.new(player1, player2)
+  game.play
 end

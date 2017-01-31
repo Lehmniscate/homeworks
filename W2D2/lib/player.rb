@@ -1,3 +1,5 @@
+require_relative 'mancala_exceptions.rb'
+
 class Player
   attr_reader :name, :side
 
@@ -11,7 +13,7 @@ class Player
     start_pos = gets.chomp.to_i
     if (start_pos.between?(1,6) && @side != 1 ||
         start_pos.between?(7,12) && @side != 2)
-      raise "Not your side!"
+      raise InputException("Not your side!")
     else
       start_pos
     end

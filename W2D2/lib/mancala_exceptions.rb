@@ -1,0 +1,2 @@
+class InputException < StandardError
+end

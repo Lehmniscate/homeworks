@@ -1,3 +1,5 @@
+require_relative 'mancala_exceptions.rb'
+
 class Board
   attr_accessor :cups
 
@@ -8,7 +10,9 @@ class Board
   end
 
   def valid_move?(start_pos)
-    raise "Invalid starting cup" unless start_pos.between?(1,14)
+    unless start_pos.between?(0,13)
+      raise InputException("Out of bounds")
+    end
   end
 
   def make_move(start_pos, current_player_name)
