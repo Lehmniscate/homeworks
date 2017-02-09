@@ -23,9 +23,11 @@ class House < ActiveRecord::Base
   end
 
   def better_seeds_query
-    Seed.select(:seeds)
-      .joins("plants")
-      .joins("gardeners")
-      .where("gardeners.house_id = ?", id)
+    s = Seed.where(houses: {id: id})
+                .joins(plant: {gardener: :house})
+                .each
+
+    s.group_by {|seed| seed.plant_id}.values
+
   end
 end
