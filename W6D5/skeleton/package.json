@@ -19,6 +19,6 @@
     "webpack": "^2.2.1"
   },
   "scripts": {
-    "webpack": "webpack"
+    "webpack-w": "webpack --watch"
   }
 }
